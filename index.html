@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Chat</title>
+</head>
+<body>
+  <h3>Ask a Question:</h3>
+  <input id="userInput" type="text" placeholder="Type your question..." />
+  <button onclick="send()">Send</button>
+  <pre id="responseBox"></pre>
+
+  <script>
+    async function send() {
+      const question = document.getElementById('userInput').value;
+      const res = await fetch("https://achet.app.n8n.cloud/webhook/myAIagent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: question })
+      });
+
+      const text = await res.text(); // or res.json() if you return JSON
+      document.getElementById('responseBox').innerText = text;
+    }
+  </script>
+</body>
+</html>
