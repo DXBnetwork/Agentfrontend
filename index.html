@@ -2,94 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>AI Chat Widget</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      margin: 10px;
-      padding: 10px;
-      max-width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      background-color: #f9f9f9;
-    }
-
-    h3 {
-      margin-top: 0;
-      font-size: 16px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      width: 100%;
-      padding: 8px;
-      background-color: #0078d4;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: #005fa3;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      background: #fff;
-      padding: 8px;
-      border: 1px solid #eee;
-      border-radius: 5px;
-      margin-top: 10px;
-      min-height: 60px;
-    }
-  </style>
+  <title>n8n Chat Widget</title>
+  <!-- Include the n8n Chat CSS from the CDN -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
+    rel="stylesheet"
+  />
 </head>
 <body>
-  <h3>Ask a Question</h3>
-  <input id="userInput" type="text" placeholder="Type your question..." />
-  <button onclick="send()">Send</button>
-  <pre id="responseBox">Awaiting input...</pre>
+  <!-- An optional container for the chat (by default, #n8n-chat) -->
+  <div id="n8n-chat"></div>
 
-  <script>
-    async function send() {
-      const inputBox = document.getElementById('userInput');
-      const responseBox = document.getElementById('responseBox');
-      const question = inputBox.value.trim();
+  <!-- Embed the chat script via CDN -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-      if (!question) {
-        responseBox.innerText = "Please enter a question.";
-        return;
-      }
+    createChat({
+      // Replace this with the EXACT Production URL from your Chat Trigger node
+      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
 
-      responseBox.innerText = "Thinking...";
-
-      try {
-        const res = await fetch("https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: question })
-        });
-
-        const text = await res.text();
-        responseBox.innerText = text;
-      } catch (error) {
-        responseBox.innerText = "Error: Could not fetch response.";
-        console.error(error);
-      }
-    }
+      // Optional: Customize the chat options
+      showWelcomeScreen: true,
+      initialMessages: [
+        'Hi there! 👋',
+        'How can I assist you today?'
+      ],
+      // More options can be found in the docs (e.g. mode: 'fullscreen')
+    });
   </script>
 </body>
 </html>
