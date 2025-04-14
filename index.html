@@ -10,7 +10,10 @@
   />
 </head>
 <body>
-  <!-- An optional container for the chat (by default, #n8n-chat) -->
+  <!-- Show your PNG image -->
+  <img src="MurrayOsorio.png" alt="Welcome Image" style="max-width: 300px; display: block; margin: 20px auto;" />
+
+  <!-- Container for the chat -->
   <div id="n8n-chat"></div>
 
   <!-- Embed the chat script via CDN -->
@@ -18,16 +21,12 @@
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
     createChat({
-      // Replace this with the EXACT Production URL from your Chat Trigger node
       webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-
-      // Optional: Customize the chat options
       showWelcomeScreen: true,
       initialMessages: [
-        'Hi there! 👋',
         'How can I assist you today?'
       ],
-      // More options can be found in the docs (e.g. mode: 'fullscreen')
+      // You can add other options here
     });
   </script>
 </body>
