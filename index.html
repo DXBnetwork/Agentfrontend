@@ -60,22 +60,40 @@
     <div id="n8n-chat"></div>
   </div>
   <script type="module">
-   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-createChat({
-  webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-  mode: 'fullscreen',
-  target: '#n8n-chat',
-  initialMessages: ['How can I assist you today?'],
-  i18n: {
-    en: {
-      title: '',        // Removed default welcome title
-      subtitle: '',     // Removed default welcome subtitle
-      inputPlaceholder: 'Type your question...',
-    }
-  }
-});
-
+    createChat({
+      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
+      mode: 'fullscreen',
+      target: '#n8n-chat',
+      initialMessages: ['How can I assist you today?'],
+      i18n: {
+        en: {
+          title: '',        // Removed default welcome title
+          subtitle: '',     // Removed default welcome subtitle
+          inputPlaceholder: 'Type your question...',
+        }
+      },
+      // onInit callback to inject custom CSS for smaller fonts and transparent header/logo
+      onInit: () => {
+        const style = document.createElement('style');
+        style.textContent = `
+          .n8n-chat__header {
+            background-color: transparent !important;
+            box-shadow: none !important;
+          }
+          .n8n-chat__logo,
+          .n8n-chat__logo img {
+            background-color: transparent !important;
+          }
+          /* Reduce font size for the chat interface (affects initial messages, buttons, etc.) */
+          .n8n-chat, .n8n-chat * {
+            font-size: 12px !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    });
   </script>
 </body>
 </html>
