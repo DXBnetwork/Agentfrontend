@@ -31,19 +31,26 @@
       margin-bottom: 15px;
     }
 
+    .chat-title {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin: 10px 0 20px 0;
+      color: #333;
+    }
+
     #n8n-chat {
       height: 500px;
       overflow: hidden;
     }
 
-    /* Customizing the n8n chat widget via CSS variables */
+    /* n8n overrides */
     :root {
       --chat--window--width: 100%;
       --chat--window--height: 500px;
       --chat--message--padding: 12px;
     }
 
-    /* Force fixed height inside iframe rendering */
     .n8n-chat__window {
       max-height: 100% !important;
       overflow: hidden;
@@ -54,13 +61,6 @@
       max-height: 350px;
       overflow-y: auto !important;
     }
-    .n8n-chat__title {
-      margin: 10px 0;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      color: #333;
-}
   </style>
 </head>
 <body>
@@ -69,6 +69,7 @@
       src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg"
       alt="Murray Osorio"
     />
+    <h2 class="chat-title">IT Support Agent</h2> <!-- Custom centered title -->
     <div id="n8n-chat"></div>
   </div>
 
@@ -78,7 +79,7 @@
     createChat({
       webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
       showWelcomeScreen: true,
-      mode: 'fullscreen', // Embed fully inside #n8n-chat
+      mode: 'fullscreen',
       target: '#n8n-chat',
       initialMessages: ['How can I assist you today?'],
       i18n: {
