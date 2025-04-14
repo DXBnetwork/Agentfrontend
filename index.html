@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Murray Osorio Chat Visualization</title>
+  <!-- n8n Chat CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -112,23 +114,22 @@
     </div>
   </div>
 
-  <!-- Only the necessary script for posting data to the webhook on button click -->
-  <script>
-    document.querySelector('.send-button').addEventListener('click', async () => {
-      const chatInput = document.querySelector('.chat-input');
-      const text = chatInput.value.trim();
-      if (!text) return;
+  <!-- n8n Chat Embed Script -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-      try {
-        await fetch('https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chatInput: text })
-        });
-        chatInput.value = '';
-      } catch (error) {
-        console.error('Failed to send chat:', error);
-      }
+    createChat({
+      // Use your production webhook URL here:
+      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
+      // Embeds the Chat window into your existing chat container
+      target: '.chat-container',
+      // Use window mode so that the Chat toggle and window will overlay inside the container
+      mode: 'window',
+      // Use your default keys (these match your original code)
+      chatInputKey: 'chatInput',
+      chatSessionKey: 'sessionId',
+      // Do not show the welcome screen if not desired
+      showWelcomeScreen: false
     });
   </script>
 </body>
