@@ -22,6 +22,8 @@
       padding: 20px;
       text-align: center;
       box-sizing: border-box;
+      	--chat--header--padding: var(--chat--spacing);
+
     }
     
     #custom-wrapper img {
@@ -39,6 +41,7 @@
       --chat--window--height: 500px;
       --chat--message--padding: 12px;
       --chat--message--font-size: 0.7rem;
+      
       
     }
     .n8n-chat__window {
@@ -58,7 +61,6 @@
       src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg"
       alt="Murray Osorio"
     />
-    <h2 class="chat-title">IT Support Agent</h2>
     <div id="n8n-chat"></div>
   </div>
   <script type="module">
@@ -71,7 +73,7 @@
       initialMessages: ['How can I assist you today?'],
       i18n: {
         en: {
-          title: '',        // Removed default welcome title
+          title: '     IT Support Agent',        // Removed default welcome title
           subtitle: '',     // Removed default welcome subtitle
           inputPlaceholder: 'Type your question...',
         }
