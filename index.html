@@ -14,26 +14,33 @@
       align-items: center;
       height: 100vh;
     }
+    /* Adjust the wrapper if you still want a slightly opaque background behind everything */
     #custom-wrapper {
       width: 420px;
-      background: white;
+      /* Using a semi-transparent white background so the logo (now behind the chat area) can peek through */
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 10px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
       padding: 20px;
       text-align: center;
       box-sizing: border-box;
     }
-    
-    #custom-wrapper img {
-      max-width: 100%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
+    /* Remove the image element - logo will no longer be rendered here */
+    /* Style the chat container with the logo background */
     #n8n-chat {
       height: 500px;
       overflow: hidden;
+      position: relative;
+      /* Set the logo as the background */
+      background: url('https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg')
+                  no-repeat center center;
+      background-size: cover;
     }
-    /* n8n overrides */
+    /* If the chat library adds a background color to the messages container, force it to transparent */
+    .n8n-chat__messages {
+      background-color: transparent !important;
+    }
+    /* n8n-chat specific overrides */
     :root {
       --chat--window--width: 100%;
       --chat--window--height: 500px;
@@ -43,39 +50,30 @@
       max-height: 100% !important;
       overflow: hidden;
     }
-    .n8n-chat__messages {
-      height: 100%;
-      max-height: 350px;
-      overflow-y: auto !important;
-    }
   </style>
 </head>
 <body>
   <div id="custom-wrapper">
-    <img
-      src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg"
-      alt="Murray Osorio"
-    />
+    <!-- Removed the <img> tag so the logo does not appear on top -->
     <h2 class="chat-title">IT Support Agent</h2>
     <div id="n8n-chat"></div>
   </div>
   <script type="module">
-   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-createChat({
-  webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-  mode: 'fullscreen',
-  target: '#n8n-chat',
-  initialMessages: ['How can I assist you today?'],
-  i18n: {
-    en: {
-      title: '',        // Removed default welcome title
-      subtitle: '',     // Removed default welcome subtitle
-      inputPlaceholder: 'Type your question...',
-    }
-  }
-});
-
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+    
+    createChat({
+      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
+      mode: 'fullscreen',
+      target: '#n8n-chat',
+      initialMessages: ['How can I assist you today?'],
+      i18n: {
+        en: {
+          title: '',        // Removed default welcome title
+          subtitle: '',     // Removed default welcome subtitle
+          inputPlaceholder: 'Type your question...',
+        }
+      }
+    });
   </script>
 </body>
 </html>
