@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Murray Osorio Chat Visualization</title>
+  <title>Murray Osorio Chat</title>
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -13,7 +14,7 @@
       align-items: center;
       height: 100vh;
     }
-    .mockup-container {
+    #custom-wrapper {
       width: 420px;
       background: white;
       border-radius: 10px;
@@ -22,76 +23,30 @@
       text-align: center;
       box-sizing: border-box;
     }
-    .logo {
-      width: 100%;
-      height: 200px;
-      background-color: #eee;
+    
+    #custom-wrapper img {
+      max-width: 100%;
       border-radius: 10px;
       margin-bottom: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #888;
     }
-    .chat-title {
-      margin: 0 0 15px 0;
-      font-size: 20px;
-      color: #333;
-    }
-    .chat-container {
-      height: 350px;
-      border: 1px solid #e1e4e8;
-      border-radius: 8px;
+    #n8n-chat {
+      height: 500px;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
     }
-    .chat-messages {
-      flex-grow: 1;
-      padding: 12px;
-      overflow-y: auto;
-      background-color: #fff;
-      text-align: left;
+    /* n8n overrides */
+    :root {
+      --chat--window--width: 100%;
+      --chat--window--height: 500px;
+      --chat--message--padding: 12px;
     }
-    .message {
-      margin-bottom: 12px;
-      max-width: 80%;
-      padding: 10px 12px;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.4;
+    .n8n-chat__window {
+      max-height: 100% !important;
+      overflow: hidden;
     }
-    .message.bot {
-      background-color: #f1f1f1;
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-      float: left;
-      clear: both;
-    }
-    .input-area {
-      display: flex;
-      padding: 12px;
-      border-top: 1px solid #e1e4e8;
-      background-color: #fff;
-    }
-    .chat-input {
-      flex-grow: 1;
-      padding: 8px 12px;
-      border: 1px solid #dfe1e5;
-      border-radius: 18px;
-      font-size: 14px;
-      outline: none;
-    }
-    .chat-input::placeholder {
-      color: #9aa0a6;
-    }
-    .send-button {
-      background: none;
-      border: none;
-      color: #4285f4;
-      cursor: pointer;
-      padding: 0 10px;
-      font-weight: bold;
+    .n8n-chat__messages {
+      height: 100%;
+      max-height: 350px;
+      overflow-y: auto !important;
     }
   </style>
 </head>
@@ -101,21 +56,26 @@
       src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg"
       alt="Murray Osorio"
     />
-    <h2 class="chat-title">IT Support Agent</h2> <!-- Custom centered title -->
+    <h2 class="chat-title">IT Support Agent</h2>
     <div id="n8n-chat"></div>
   </div>
   <script type="module">
-  createChat({
-    webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-    mode: 'fullscreen',
-    target: '#n8n-chat',
-    initialMessages: ['How can I assist you today?'],
-    i18n: {
-      en: {
-        inputPlaceholder: 'Type your question...',
-      }
+   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+createChat({
+  webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
+  mode: 'fullscreen',
+  target: '#n8n-chat',
+  initialMessages: ['How can I assist you today?'],
+  i18n: {
+    en: {
+      title: '',        // Removed default welcome title
+      subtitle: '',     // Removed default welcome subtitle
+      inputPlaceholder: 'Type your question...',
     }
-  });
-</script>
+  }
+});
+
+  </script>
 </body>
 </html>
