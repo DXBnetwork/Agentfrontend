@@ -21,23 +21,15 @@
       mode: 'embedded'
     });
 
-    // Wait until the chat DOM is ready, then insert image
-    const insertImage = () => {
-      const container = document.querySelector('#n8n-chat .n8n-chat__messages');
-      if (container) {
+    // Poll the DOM for the welcome screen, then inject the image
+    const injectIntoWelcome = () => {
+      const welcomeEl = document.querySelector('#n8n-chat .n8n-welcome-screen');
+      if (welcomeEl && !document.getElementById('welcome-image')) {
         const img = document.createElement('img');
         img.src = 'https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg';
-        img.alt = 'Welcome';
+        img.alt = 'Welcome Image';
+        img.id = 'welcome-image';
         img.style.maxWidth = '200px';
         img.style.display = 'block';
-        img.style.margin = '10px auto';
-        container.prepend(img);
-      } else {
-        requestAnimationFrame(insertImage);
-      }
-    };
-
-    requestAnimationFrame(insertImage);
-  </script>
-</body>
-</html>
+        img.style.margin = '20px auto 0 auto';
+        welcomeEl.appendChild
