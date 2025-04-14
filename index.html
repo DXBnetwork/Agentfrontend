@@ -32,4 +32,13 @@
         img.style.maxWidth = '200px';
         img.style.display = 'block';
         img.style.margin = '20px auto 0 auto';
-        welcomeEl.appendChild
+        welcomeEl.appendChild(img);
+      } else {
+        requestAnimationFrame(injectIntoWelcome);
+      }
+    };
+
+    requestAnimationFrame(injectIntoWelcome);
+  </script>
+</body>
+</html>
