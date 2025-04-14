@@ -21,8 +21,8 @@
       mode: 'embedded'
     });
 
-    // Inject image into chat after it renders
-    setTimeout(() => {
+    // Wait until the chat DOM is ready, then insert image
+    const insertImage = () => {
       const container = document.querySelector('#n8n-chat .n8n-chat__messages');
       if (container) {
         const img = document.createElement('img');
@@ -32,8 +32,12 @@
         img.style.display = 'block';
         img.style.margin = '10px auto';
         container.prepend(img);
+      } else {
+        requestAnimationFrame(insertImage);
       }
-    }, 1000);
+    };
+
+    requestAnimationFrame(insertImage);
   </script>
 </body>
 </html>
