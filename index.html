@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Murray Osorio Chat Visualization</title>
-  <!-- n8n Chat CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -24,13 +22,16 @@
       text-align: center;
       box-sizing: border-box;
     }
-    .logo img {
+    .logo {
       width: 100%;
-      height: auto;
-      max-height: 200px;
-      object-fit: contain;
+      height: 200px;
+      background-color: #eee;
       border-radius: 10px;
       margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #888;
     }
     .chat-title {
       margin: 0 0 15px 0;
@@ -95,42 +96,27 @@
   </style>
 </head>
 <body>
-  <div class="mockup-container">
-    <div class="logo">
-      <img 
-        src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg" 
-        alt="Murray Osorio Logo"
-      >
-    </div>
-    <h2 class="chat-title">IT Support Agent</h2>
-    <div class="chat-container">
-      <div class="chat-messages">
-        <div class="message bot">How can I assist you today?</div>
-      </div>
-      <div class="input-area">
-        <input type="text" class="chat-input" placeholder="Type your question...">
-        <button class="send-button">↑</button>
-      </div>
-    </div>
+  <div id="custom-wrapper">
+    <img
+      src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg"
+      alt="Murray Osorio"
+    />
+    <h2 class="chat-title">IT Support Agent</h2> <!-- Custom centered title -->
+    <div id="n8n-chat"></div>
   </div>
-
-  <!-- n8n Chat Embed Script -->
   <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-    createChat({
-      // Use your production webhook URL here:
-      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-      // Embeds the Chat window into your existing chat container
-      target: '.chat-container',
-      // Use window mode so that the Chat toggle and window will overlay inside the container
-      mode: 'window',
-      // Use your default keys (these match your original code)
-      chatInputKey: 'chatInput',
-      chatSessionKey: 'sessionId',
-      // Do not show the welcome screen if not desired
-      showWelcomeScreen: false
-    });
-  </script>
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  createChat({
+    webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
+    mode: 'fullscreen',
+    target: '#n8n-chat',
+    initialMessages: ['How can I assist you today?'],
+    i18n: {
+      en: {
+        inputPlaceholder: 'Type your question...',
+      }
+    }
+  });
+</script>
 </body>
 </html>
