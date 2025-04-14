@@ -89,6 +89,7 @@
       cursor: pointer;
       padding: 0 10px;
       font-weight: bold;
+      font-size: 16px; /* Make sure the arrow is clearly visible */
     }
   </style>
 </head>
@@ -104,9 +105,26 @@
       </div>
       <div class="input-area">
         <input type="text" class="chat-input" placeholder="Type your question...">
-        <button class="send-button">↑</button>
+        <button class="send-button" type="button">↑</button>
       </div>
     </div>
   </div>
+
+  <script>
+    const sendButton = document.querySelector('.send-button');
+    const chatInput = document.querySelector('.chat-input');
+
+    sendButton.addEventListener('click', function() {
+      const userMessage = chatInput.value.trim();
+
+      if (userMessage.length > 0) {
+        alert('You typed: ' + userMessage);
+        // Here you can add code to send the message to a server, Salesforce, etc.
+
+        // Clear the input
+        chatInput.value = '';
+      }
+    });
+  </script>
 </body>
 </html>
