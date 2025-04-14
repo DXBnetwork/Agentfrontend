@@ -10,40 +10,30 @@
 </head>
 <body>
   <div id="n8n-chat"></div>
-  <script type="module">
-  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
-  createChat({
-    webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-    showWelcomeScreen: true,
-    initialMessages: ['How can I assist you today?'],
-    mode: 'embedded'
-  });
-
-  // Inject image into chat after it renders
-  setTimeout(() => {
-    const container = document.querySelector('#n8n-chat .n8n-chat__messages');
-    if (container) {
-      const img = document.createElement('img');
-      img.src = 'https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg';
-      img.style.maxWidth = '200px';
-      img.style.display = 'block';
-      img.style.margin = '10px auto';
-      container.prepend(img);
-    }
-  }, 1000); // Adjust delay if needed
-</script>
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
     createChat({
       webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
       showWelcomeScreen: true,
-      initialMessages: [
-        '<img src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg" alt="Welcome" style="max-width: 200px; display: block; margin: 10px auto;" />',
-        'How can I assist you today?'
-      ],
+      initialMessages: ['How can I assist you today?'],
       mode: 'embedded'
     });
+
+    // Inject image into chat after it renders
+    setTimeout(() => {
+      const container = document.querySelector('#n8n-chat .n8n-chat__messages');
+      if (container) {
+        const img = document.createElement('img');
+        img.src = 'https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg';
+        img.alt = 'Welcome';
+        img.style.maxWidth = '200px';
+        img.style.display = 'block';
+        img.style.margin = '10px auto';
+        container.prepend(img);
+      }
+    }, 1000);
   </script>
 </body>
 </html>
