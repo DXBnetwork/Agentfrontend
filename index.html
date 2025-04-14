@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Murray Osorio Chat Visualization</title>
-  
-  <!-- Your existing styles -->
   <style>
     body {
       margin: 0;
@@ -91,22 +89,16 @@
       cursor: pointer;
       padding: 0 10px;
       font-weight: bold;
-      font-size: 16px; /* Make sure the arrow is clearly visible */
     }
   </style>
-  
-  <!-- n8n Chat styles -->
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 </head>
 <body>
-
-  <!-- Your existing chat container -->
   <div class="mockup-container">
     <div class="logo">
       <img 
-        src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg"
+        src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg" 
         alt="Murray Osorio Logo"
-      />
+      >
     </div>
     <h2 class="chat-title">IT Support Agent</h2>
     <div class="chat-container">
@@ -114,46 +106,29 @@
         <div class="message bot">How can I assist you today?</div>
       </div>
       <div class="input-area">
-        <input
-          type="text"
-          class="chat-input"
-          placeholder="Type your question..."
-        />
-        <button class="send-button" type="button">↑</button>
+        <input type="text" class="chat-input" placeholder="Type your question...">
+        <button class="send-button">↑</button>
       </div>
     </div>
   </div>
-  
-  <!-- Container for the n8n Chat widget (uses default target: '#n8n-chat') -->
-  <div id="n8n-chat"></div>
 
-  <!-- Your custom JavaScript for handling arrow button clicks -->
+  <!-- Only the necessary script for posting data to the webhook on button click -->
   <script>
-    const sendButton = document.querySelector('.send-button');
-    const chatInput = document.querySelector('.chat-input');
+    document.querySelector('.send-button').addEventListener('click', async () => {
+      const chatInput = document.querySelector('.chat-input');
+      const text = chatInput.value.trim();
+      if (!text) return;
 
-    sendButton.addEventListener('click', function() {
-      const userMessage = chatInput.value.trim();
-      if (userMessage.length > 0) {
-        alert('You typed: ' + userMessage);
-        // Here you can add code to handle user input within your custom mockup
-        // (e.g. sending to a server or embedding into the .chat-messages container).
+      try {
+        await fetch('https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chatInput: text })
+        });
         chatInput.value = '';
+      } catch (error) {
+        console.error('Failed to send chat:', error);
       }
-    });
-  </script>
-  
-  <!-- n8n Chat (CDN Embed) -->
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
-    createChat({
-      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-      showWelcomeScreen: true,
-      initialMessages: [
-        'Hi there! 👋',
-        'My name is Nathan. How can I assist you today?'
-      ],
     });
   </script>
 </body>
