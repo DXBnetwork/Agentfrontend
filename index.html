@@ -2,43 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>n8n Chat Widget</title>
-  <link
-    href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
-    rel="stylesheet"
-  />
+  <title>Murray Osorio AI Chat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 400px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .chat-box {
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+      height: 200px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chat-input button {
+      padding: 10px 15px;
+      background-color: #bf1e2e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .chat-input button:hover {
+      background-color: #9f1927;
+    }
+  </style>
 </head>
 <body>
-  <div id="n8n-chat"></div>
+  <div class="chat-container">
+    <div class="chat-header">
+      <img src="https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg" alt="Murray Osorio" />
+    </div>
+    <div class="chat-box" id="responseBox">Welcome! Ask me anything.</div>
+    <div class="chat-input">
+      <input id="userInput" type="text" placeholder="Type your question..." />
+      <button onclick="send()">Send</button>
+    </div>
+  </div>
 
-  <script type="module">
-    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+  <script>
+    async function send() {
+      const input = document.getElementById('userInput');
+      const responseBox = document.getElementById('responseBox');
+      const message = input.value.trim();
+      if (!message) return;
 
-    createChat({
-      webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
-      showWelcomeScreen: true,
-      initialMessages: ['How can I assist you today?'],
-      mode: 'embedded'
-    });
+      responseBox.textContent += `\nYou: ${message}`;
+      input.value = '';
+      
+      try {
+        const res = await fetch("https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message })
+        });
 
-    // Poll the DOM for the welcome screen, then inject the image
-    const injectIntoWelcome = () => {
-      const welcomeEl = document.querySelector('#n8n-chat .n8n-welcome-screen');
-      if (welcomeEl && !document.getElementById('welcome-image')) {
-        const img = document.createElement('img');
-        img.src = 'https://d1imjpjik7kc4g.cloudfront.net/scfirm_images/d5b2d5cdfd3687dc8e966b35462c6c62.jpg';
-        img.alt = 'Welcome Image';
-        img.id = 'welcome-image';
-        img.style.maxWidth = '200px';
-        img.style.display = 'block';
-        img.style.margin = '20px auto 0 auto';
-        welcomeEl.appendChild(img);
-      } else {
-        requestAnimationFrame(injectIntoWelcome);
+        const text = await res.text();
+        responseBox.textContent += `\nAI: ${text}`;
+        responseBox.scrollTop = responseBox.scrollHeight;
+      } catch (error) {
+        responseBox.textContent += `\nError: Unable to reach AI.`;
       }
-    };
-
-    requestAnimationFrame(injectIntoWelcome);
+    }
   </script>
 </body>
 </html>
