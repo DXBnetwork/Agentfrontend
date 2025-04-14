@@ -3,28 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <title>n8n Chat Widget</title>
-  <!-- Include the n8n Chat CSS from the CDN -->
   <link
     href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
     rel="stylesheet"
   />
 </head>
 <body>
-  <!-- Container for the chat -->
   <div id="n8n-chat"></div>
-
-  <!-- Embed the chat script via CDN -->
   <script type="module">
     import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
     createChat({
       webhookUrl: 'https://achet.app.n8n.cloud/webhook/c4ea097f-0f29-4499-9056-aa8fe4725334/chat',
       showWelcomeScreen: true,
       initialMessages: [
-        '<img src="/Users/Anthony/Downloads/MurrayOsorio.png" alt="Welcome" style="max-width: 200px; display: block; margin: 10px auto;" />',
+        '<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.bcgsearch.com%2Fbestlawfirms%2FKrqHr%2FMurray-Osorio-PLLC%2Fphotos&psig=AOvVaw0un7lCOIOpX4QTK8_9KW69&ust=1744725190730000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLiPm_vV14wDFQAAAAAdAAAAABAE" alt="Welcome" style="max-width: 200px; display: block; margin: 10px auto;" />',
         'How can I assist you today?'
       ],
-      mode: 'embedded' // optional: or 'fullscreen'
+      mode: 'embedded'
     });
   </script>
 </body>
